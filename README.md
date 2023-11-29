@@ -2,6 +2,8 @@
 
 **Yet Another Computational HASS Tool for the Mobile Investigation of Platforms** or **yacht-mip** is a relatively easy to use tool for researchers to annotate social posts into a research database from a mobile phone. For the uninitiated, HASS stands for Humanities and Social Sciences.
 
+**yacht-mip** is currently in development. The current release is _not functional_. The current release has been made in order to snapshot the project in its current form for posterity.
+
 **yacht-mip** is designed to act as a mid-level technical solution that provides lightweight automation for researchers studying social platforms by creating a quick way to select and code social data. **yacht-mip** works by allowing a research participant or researcher to easily share posts from social media platforms into a research database and to conduct [qualitative coding](https://en.wikipedia.org/wiki/Coding_(social_sciences)) on the fly, then making data accessible for analysis using either **pandas** or by exporting to spreadsheets.
 
 **yacht-mip** relies on Telegram in order to operate, and all users will need an account in order to contribute or receive data. Telegram does have spammy bots, so I recommend hardening your accounts against spam after signup.
@@ -14,12 +16,40 @@
 
 Because of these potentials, a project lead should ensure that their research project is compliant with all relevant institutioanl policies and obligations covering research ethics, such as IRBs, HERCs, and similar.
 
-**yacht-mip** is currently in development. The current release is functional, although still requires beginner-intermediate python skills to output data to excel or a CSV. The current release has been made in order to snapshot the project in its current form for posterity.
 
 # Basic workflow summary
-The core workflow process involves an investigator using a social media platform, identifying a research-relevant post, sharing the URL for that post into a pre-designated Telegram group chat. The investigator may optionally add qualitative codes in the form of hashtags, cashtags, and comments. 
+The core workflow process involves an investigator who finds posts and then sends them to a dedicated Telegram chat for processing.
 
+## Capture posts
+The workflow for gathering posts is as follows:
+1. Identify a post on a specific platform
+2. Copy the post's link
+3. Switch to the Telegram chat
+4. Paste link into message
+5. Optionally, use the markup format to add qualitative codes for hashtags, cashtags, and comments.
+6. Send the message
+
+## Pull data
 Then, an investigator with appropriate credentials can then run **yacht-mip** to pull messages from the chat into a DataFrame.
+
+In order to pull data a researcher must create an appropriate class object for the project known as a 'ship'. Each ship is a class object that bases the **yacht-mip** superclass, and is designed to pull data from html structure of the relevant platform. Ships for WeChat and Red are provided.
+
+Using Red as an example, the full workflow for pulling data is:
+1. Download and unpack the library to a local folder
+2. Edit `YachtSample.ini` to add credentials as appropriate and rename to `Yacht.ini`
+3. Import `yachtmip`
+4. Create a RedShip object, targeted to a specific chat.
+   `red_data = RedShip("<chat name>")`
+   If `chat name` is not provided then this can be edited later
+6. Complete any credential or two-factor authentication processes.
+7. Initialise the project with `await red_data.initialise()`
+   - This is an asychnronous method that initialises the network operations.
+   - The tool confirms that the appropriate chats are available.
+   - The tool then grabs all messages from the associated chat.
+   - This creates an archive of processed messages
+8. 
+
+
 
 # Detailed description
 
